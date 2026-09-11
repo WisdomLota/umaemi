@@ -10,7 +10,7 @@ type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const baseStyles =
-  "inline-flex items-center gap-3 px-6 py-4 rounded-xl font-mono text-sm tracking-wide transition-colors duration-200";
+  "inline-flex items-center justify-center gap-4 px-10 py-6 rounded-tl-3xl rounded-br-3xl font-mono text-base font-medium tracking-wide transition-colors duration-200 w-full max-w-md";
 
 const variants = {
   primary: "bg-burnt text-cream hover:bg-[#c23a00]",
@@ -30,7 +30,7 @@ export default function Button({
   const content = (
     <>
       {children}
-      {showArrow && <ArrowRight size={18} />}
+      {showArrow && <ArrowRight size={22} strokeWidth={2.5} />}
     </>
   );
 

@@ -14,7 +14,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Umaemi — We handle the tech, so you can focus on growth.",
+  title: "Umaemi handles the tech, so you can focus on growth.",
   description: "Umaemi helps non-technical businesses and individuals turn ideas into seamless digital solutions.",
 };
 
