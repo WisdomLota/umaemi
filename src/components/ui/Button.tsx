@@ -5,16 +5,17 @@ import { ButtonHTMLAttributes } from "react";
 type ButtonProps = {
   children: React.ReactNode;
   href?: string;
-  variant?: "primary" | "dark";
+  variant?: "primary" | "dark" | "outline";
   showArrow?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-4 px-10 py-6 rounded-tl-3xl rounded-br-3xl font-mono text-base font-medium tracking-wide transition-colors duration-200 w-full max-w-md";
+  "inline-flex items-center justify-center gap-4 px-10 py-6 rounded-tl-2xl rounded-br-2xl font-mono text-base font-medium tracking-wide transition-colors duration-200 w-full max-w-md";
 
 const variants = {
   primary: "bg-burnt text-cream hover:bg-[#c23a00]",
   dark: "bg-dark text-cream hover:bg-[#2b0a02]",
+  outline: "border-2 border-burnt text-burnt bg-transparent hover:bg-burnt/10",
 };
 
 export default function Button({

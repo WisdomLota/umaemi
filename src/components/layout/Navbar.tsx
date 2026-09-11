@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50">
       <div className="h-3 bg-burnt" />
-      <div className="bg-cream/90 backdrop-blur-sm border-b border-dark/10">
+      <div className="bg-peach backdrop-blur-sm border-b border-dark/10">
         <nav className="mx-auto flex items-center justify-between px-10 md:px-16 py-8">
           <Link href="#hero" className="flex items-center gap-2 font-mono font-medium text-dark">
             <Image src="/icons/logo.svg" alt="Umaemi" width={40} height={40} priority />
