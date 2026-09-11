@@ -14,7 +14,7 @@ const sideProjectsRight = [
 export default function ProjectCatalog() {
   return (
     <section id="projects" className="bg-[#1A0503] text-cream py-24 md:py-36 px-6 sm:px-10 md:px-16">
-      <h2 className="text-center font-sans text-3xl md:text-4xl mb-16 md:mb-24">
+      <h2 className="text-center font-sans text-3xl md:text-5xl mb-16 md:mb-24">
         Our Project Catalog
       </h2>
 
