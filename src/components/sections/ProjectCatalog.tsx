@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import ArrowUpRight from "@/components/ui/ArrowUpRight";
 import Button from "@/components/ui/Button";
 
 const sideProjects = [
@@ -47,7 +47,7 @@ export default function ProjectCatalog() {
         </div>
         <div className="flex flex-col items-stretch gap-4 w-full max-w-xs">
           <a href="#" className="inline-flex items-center justify-center gap-3 px-8 py-5 rounded-tl-2xl rounded-br-2xl border-2 border-cream text-cream font-mono text-sm font-medium hover:bg-cream/10 transition-colors">
-            Visit Site <ArrowUpRight size={20} strokeWidth={2.5} />
+            Visit Site <ArrowUpRight className="w-5 h-5" />
           </a>
           <Button href="#" className="w-full justify-center">Explore</Button>
         </div>
@@ -94,7 +94,7 @@ export default function ProjectCatalog() {
           </div>
           <div className="absolute -bottom-14 left-0 flex flex-col items-stretch gap-4 w-72">
             <a href="#" className="inline-flex items-center justify-center gap-3 px-10 py-6 rounded-tl-2xl rounded-br-2xl border-2 border-cream text-cream font-mono text-base font-medium hover:bg-cream/10 transition-colors">
-              Visit Site <ArrowUpRight size={22} strokeWidth={2.5} />
+              Visit Site <ArrowUpRight className="w-5 h-5" />
             </a>
             <Button href="#" className="w-full justify-center">Explore</Button>
           </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import ArrowRight from "./ArrowRight";
 import { ButtonHTMLAttributes } from "react";
 
 type ButtonProps = {
@@ -31,7 +31,7 @@ export default function Button({
   const content = (
     <>
       {children}
-      {showArrow && <ArrowRight size={22} strokeWidth={2.5} />}
+      {showArrow && <ArrowRight className="w-5 h-5" />}
     </>
   );
 

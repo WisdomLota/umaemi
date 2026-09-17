@@ -1,0 +1,7 @@
+export default function ArrowUpRight({ className = "" }: { className?: string }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <path fillRule="evenodd" clipRule="evenodd" d="M7.72308 2.4C7.06033 2.4 6.52308 1.86274 6.52308 1.2C6.52308 0.537258 7.06033 0 7.72308 0H18.8C19.4627 0 20 0.537258 20 1.2V13.0154C20 13.6781 19.4627 14.2154 18.8 14.2154C18.1373 14.2154 17.6 13.6781 17.6 13.0154V4.09706L2.04853 19.6485C1.5799 20.1172 0.820101 20.1172 0.351472 19.6485C-0.117157 19.1799 -0.117157 18.4201 0.351472 17.9515L15.9029 2.4H7.72308Z" fill="currentColor"/>
+    </svg>
+  );
+}
