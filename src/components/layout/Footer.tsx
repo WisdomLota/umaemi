@@ -31,10 +31,9 @@ export default function Footer() {
         />
 
         <Reveal>
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12">
+        <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left justify-between gap-12">
           <Image src="/icons/logo-gray.svg" alt="" width={130} height={130} />
-
-          <div className="flex flex-col items-start md:items-end gap-8">
+          <div className="flex flex-col items-center md:items-end gap-8">
             <div className="flex gap-5">
               {socials.map(({ icon: Icon, href }, i) => (
                 <Link
@@ -47,7 +46,7 @@ export default function Footer() {
               ))}
             </div>
 
-            <ul className="flex gap-10 font-mono text-base text-cream">
+            <ul className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-3 font-mono text-sm md:text-base text-cream">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="hover:text-burnt transition-colors">
