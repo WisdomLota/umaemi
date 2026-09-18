@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 
 export default function ClosingCTA() {
   return (
     <div className="bg-[#1A0503] px-6 sm:px-10 md:px-16 pt-20 pb-10">
+      <Reveal>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         <div>
           <h2 className="font-sans text-3xl md:text-4xl text-cream font-medium mb-8 leading-tight">
@@ -21,6 +23,7 @@ export default function ClosingCTA() {
           className="hidden md:block"
         />
       </div>
+    </Reveal>
     </div>
   );
 }

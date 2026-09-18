@@ -3,6 +3,7 @@ import Link from "next/link";
 import LinkedinIcon from "@/components/ui/LinkedinIcon";
 import InstagramIcon from "@/components/ui/InstagramIcon";
 import XIcon from "@/components/ui/XIcon";
+import Reveal from "@/components/ui/Reveal";
 
 const navLinks = [
   { label: "Home", href: "#hero" },
@@ -29,6 +30,7 @@ export default function Footer() {
           }}
         />
 
+        <Reveal>
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12">
           <Image src="/icons/logo-gray.svg" alt="" width={130} height={130} />
 
@@ -60,6 +62,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
+    </Reveal>
       </div>
     </footer>
   );

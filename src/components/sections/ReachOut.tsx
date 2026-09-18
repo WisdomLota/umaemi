@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SendIcon from "@/components/ui/SendIcon";
+import Reveal from "@/components/ui/Reveal";
 
 export default function ReachOut() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,8 @@ export default function ReachOut() {
 
   return (
     <section id="contact" className="px-6 sm:px-10 md:px-16 py-16">
-      <div className="max-w-6xl mx-auto bg-dark rounded-tl-3xl rounded-br-3xl px-10 md:px-16 py-16">
+      <Reveal className="max-w-6xl mx-auto">
+      <div className="bg-dark rounded-tl-3xl rounded-br-3xl px-10 md:px-16 py-16">
         <h2 className="font-sans text-3xl md:text-4xl font-medium text-peach mb-6">
           Reach Out
         </h2>
@@ -56,6 +58,7 @@ export default function ReachOut() {
           </div>
         </form>
       </div>
+    </Reveal>
     </section>
   );
 }
