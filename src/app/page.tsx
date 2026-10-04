@@ -10,11 +10,16 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <ProjectCatalog />
-      <Services />
-      <ReachOut />
-      <ClosingCTA />
+      <main className="relative z-10">
+        {/* Hero stays pinned underneath while the catalog rises over it. */}
+        <div className="relative">
+          <Hero />
+          <ProjectCatalog />
+        </div>
+        <Services />
+        <ReachOut />
+        <ClosingCTA />
+      </main>
       <Footer />
     </>
   );
