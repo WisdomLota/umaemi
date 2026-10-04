@@ -4,9 +4,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+import { Flip } from "gsap/Flip";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin);
+  gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, Flip);
 }
 
 // The whole site speaks one motion language: a sharp exponential release for
@@ -23,4 +24,4 @@ export const DUR = {
   slow: 1.4,
 } as const;
 
-export { gsap, ScrollTrigger, SplitText };
+export { gsap, ScrollTrigger, SplitText, Flip };
