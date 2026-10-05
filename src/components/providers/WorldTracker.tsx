@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { ScrollTrigger } from "@/lib/gsap";
 
 /**
@@ -8,6 +9,7 @@ import { ScrollTrigger } from "@/lib/gsap";
  * so fixed chrome (nav, cursor) always reads against the colour behind it.
  */
 export default function WorldTracker() {
+  const pathname = usePathname();
   useEffect(() => {
     const root = document.documentElement;
     const triggers = Array.from(document.querySelectorAll<HTMLElement>("[data-world]")).map((el) =>
@@ -20,7 +22,9 @@ export default function WorldTracker() {
         },
       })
     );
+    const first = document.querySelector<HTMLElement>("[data-world]");
+    if (first) root.dataset.world = first.dataset.world;
     return () => triggers.forEach((t) => t.kill());
-  }, []);
+  }, [pathname]);
   return null;
 }

@@ -25,3 +25,13 @@ export default function HeroDiamond({ color = "#460E04", className = "" }: { col
     </svg>
   );
 }
+
+/** One piece of the diamond on its own, cropped to its bounds. */
+export function DiamondPiece({ index, color = "#460E04", className = "" }: { index: number; color?: string; className?: string }) {
+  const p = DIAMOND_PIECES[index];
+  return (
+    <svg viewBox={p.box.join(" ")} fill="none" xmlns="http://www.w3.org/2000/svg" className={`w-full h-full ${className}`} aria-hidden>
+      <path d={p.d} fill={color} />
+    </svg>
+  );
+}

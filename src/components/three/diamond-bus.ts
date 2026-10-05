@@ -14,6 +14,8 @@ export type AnchorPose = {
   spin: number;
   /** How strongly the diamond tilts toward the cursor. */
   tilt: number;
+  /** Show only this piece (0 top, 1 right, 2 bottom, 3 left), enlarged; -1 for all. */
+  solo: number;
 };
 
 export type Anchor = {

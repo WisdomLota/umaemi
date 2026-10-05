@@ -42,7 +42,11 @@ function buildPieces() {
     geo.boundingBox!.getCenter(center);
     geo.translate(-center.x, -center.y, -center.z);
     geo.computeVertexNormals();
-    return { geo, center, dir: new THREE.Vector3(piece.dir[0], piece.dir[1], 0), scatter: SCATTER[i] };
+    const box = new THREE.Vector3();
+    geo.boundingBox!.getSize(box);
+    // How much this piece must grow to fill the whole diamond's box on its own.
+    const fill = Math.min(ASPECT / box.y, 1 / box.x);
+    return { geo, center, fill, dir: new THREE.Vector3(piece.dir[0], piece.dir[1], 0), scatter: SCATTER[i] };
   });
 }
 
@@ -55,10 +59,17 @@ type Pose = {
   spin: number;
   tilt: number;
   color: THREE.Color;
+  /** Per piece: 1 = this piece is shown alone, centred and enlarged. */
+  solo: number[];
+  /** Per piece: 0 = hidden. */
+  vis: number[];
 };
 
 function makePose(): Pose {
-  return { x: 0, y: 0, size: 0, explode: 0, glow: 0, spin: 0, tilt: 1, color: new THREE.Color() };
+  return {
+    x: 0, y: 0, size: 0, explode: 0, glow: 0, spin: 0, tilt: 1, color: new THREE.Color(),
+    solo: [0, 0, 0, 0], vis: [1, 1, 1, 1],
+  };
 }
 
 function readAnchor(a: Anchor, out: Pose) {
@@ -71,6 +82,10 @@ function readAnchor(a: Anchor, out: Pose) {
   out.spin = a.pose.spin;
   out.tilt = a.pose.tilt;
   out.color.set(a.pose.color);
+  for (let i = 0; i < 4; i++) {
+    out.solo[i] = a.pose.solo === i ? 1 : 0;
+    out.vis[i] = a.pose.solo < 0 || a.pose.solo === i ? 1 : 0;
+  }
   return out;
 }
 
@@ -83,6 +98,10 @@ function mixPose(a: Pose, b: Pose, t: number, out: Pose) {
   out.spin = lerp(a.spin, b.spin, t);
   out.tilt = lerp(a.tilt, b.tilt, t);
   out.color.lerpColors(a.color, b.color, t);
+  for (let i = 0; i < 4; i++) {
+    out.solo[i] = lerp(a.solo[i], b.solo[i], t);
+    out.vis[i] = lerp(a.vis[i], b.vis[i], t);
+  }
   return out;
 }
 
@@ -128,6 +147,7 @@ function Diamond() {
     x: 0, y: 0, size: 0, explode: 3, glow: 0.4, spin: 0, tilt: 0,
     color: new THREE.Color("#E54100"), angle: 0, kickVel: 0, burst: 0, hover: 0,
     tiltX: 0, tiltY: 0, focus: [0, 0, 0, 0], first: true, flip: 0, flight: 0,
+    solo: [0, 0, 0, 0], vis: [1, 1, 1, 1],
   });
   const pointer = useRef({ x: -1e4, y: -1e4, nx: 0, ny: 0 });
 
@@ -175,10 +195,11 @@ function Diamond() {
         const top = list[k].section.getBoundingClientRect().top;
         const t = smoothstep(clamp((enter - top) / span, 0, 1), 0, 1);
         mixPose(readAnchor(list[k - 1], a), readAnchor(list[k], b), t, mixed);
-        // In transit the diamond ducks smaller and turns over once per
-        // section — the flip accumulates, so it's continuous at boundaries.
+        // In transit the diamond ducks smaller and turns a full circle per
+        // section (so lone pieces never land mirrored) — the turn accumulates,
+        // so it's continuous at boundaries.
         flight = Math.sin(Math.PI * t);
-        flipTarget = (k - 1 + t) * Math.PI;
+        flipTarget = (k - 1 + t) * Math.PI * 2;
       }
       haveAnchor = mixed.size > 0;
       mixed.size *= 1 - 0.35 * flight;
@@ -193,6 +214,8 @@ function Diamond() {
     center.spin = 0.25;
     center.tilt = 0.6;
     center.color.copy(PRELOADER_COLOR);
+    center.solo.fill(0);
+    center.vis.fill(1);
     if (haveAnchor) mixPose(center, mixed, bus.handoff, target);
     else mixPose(center, center, 0, target);
 
@@ -234,11 +257,12 @@ function Diamond() {
     L.tiltX = damp(L.tiltX, pointer.current.ny * 0.45 * L.tilt, 4, dt);
     L.tiltY = damp(L.tiltY, pointer.current.nx * 0.6 * L.tilt, 4, dt);
     L.angle += (L.spin + L.kickVel) * dt;
-    // When an anchor doesn't ask for spin, ease back to the nearest face-on
-    // angle (the diamond reads the same from the front and back).
+    // When an anchor doesn't ask for spin, ease back to the nearest full turn
+    // so the object (or a lone piece) faces the right way round.
     const settle = 1 - clamp(L.spin / 0.3, 0, 1);
+    const TURN = Math.PI * 2;
     if (settle > 0 && Math.abs(L.kickVel) < 0.5) {
-      L.angle = damp(L.angle, Math.round(L.angle / Math.PI) * Math.PI, 2.5 * settle, dt);
+      L.angle = damp(L.angle, Math.round(L.angle / TURN) * TURN, 2.5 * settle, dt);
     }
 
     // 4. Apply.
@@ -262,14 +286,21 @@ function Diamond() {
       const focused = bus.focus === i;
       L.focus[i] = damp(L.focus[i], focused ? 1 : 0, 6, dt);
       const f = L.focus[i];
-      const push = L.explode * 0.5 + L.hover * 0.06 + L.burst * 0.9 + f * 0.16;
+      L.solo[i] = damp(L.solo[i], target.solo[i], 5, dt);
+      L.vis[i] = damp(L.vis[i], target.vis[i], 5, dt);
+      const solo = L.solo[i];
+      const keep = 1 - solo;
+      m.visible = L.vis[i] > 0.01;
+      // A solo piece slides to the centre and grows to fill the anchor alone.
+      m.scale.setScalar(Math.max(L.vis[i], 0.0001) * (1 + solo * (p.fill - 1)));
+      const push = (L.explode * 0.5 + L.hover * 0.06 + L.burst * 0.9 + f * 0.16) * keep + L.burst * 0.3 * solo;
       const sc = p.scatter;
       m.position.set(
-        p.center.x + p.dir.x * push + sc.push[0] * chaos * 0.6,
-        p.center.y + p.dir.y * push + sc.push[1] * chaos * 0.6,
+        p.center.x * keep + p.dir.x * push + sc.push[0] * chaos * 0.6,
+        p.center.y * keep + p.dir.y * push + sc.push[1] * chaos * 0.6,
         p.center.z + sc.push[2] * (chaos + L.burst) * 0.5 + f * 0.12
       );
-      const r = chaos + L.burst * 0.5 + L.explode * 0.08;
+      const r = chaos + L.burst * 0.5 + L.explode * 0.08 * keep;
       m.rotation.set(sc.rot[0] * r, sc.rot[1] * r, sc.rot[2] * r);
       const mat = m.material as THREE.MeshPhysicalMaterial;
       mat.color.copy(L.color);

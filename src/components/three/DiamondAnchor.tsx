@@ -18,6 +18,7 @@ const DEFAULT_POSE: AnchorPose = {
   glow: 0,
   spin: 0,
   tilt: 1,
+  solo: -1,
 };
 
 /**
@@ -28,17 +29,17 @@ const DEFAULT_POSE: AnchorPose = {
 export default function DiamondAnchor({ id, className = "", fallback, ...pose }: DiamondAnchorProps) {
   const ref = useRef<HTMLDivElement>(null);
   const enabled = useStageEnabled();
-  const { explode, scale, color, glow, spin, tilt } = { ...DEFAULT_POSE, ...pose };
+  const { explode, scale, color, glow, spin, tilt, solo } = { ...DEFAULT_POSE, ...pose };
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const section = (el.closest("[data-world]") as HTMLElement) ?? el;
-    anchors.set(id, { el, section, pose: { explode, scale, color, glow, spin, tilt } });
+    anchors.set(id, { el, section, pose: { explode, scale, color, glow, spin, tilt, solo } });
     return () => {
       anchors.delete(id);
     };
-  }, [id, explode, scale, color, glow, spin, tilt]);
+  }, [id, explode, scale, color, glow, spin, tilt, solo]);
 
   return (
     <div ref={ref} aria-hidden className={className} data-diamond-anchor={id}>

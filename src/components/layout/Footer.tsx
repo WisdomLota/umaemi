@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import LinkedinIcon from "@/components/ui/LinkedinIcon";
 import InstagramIcon from "@/components/ui/InstagramIcon";
 import XIcon from "@/components/ui/XIcon";
@@ -23,6 +24,8 @@ const socials = [
  */
 export default function Footer() {
   const root = useRef<HTMLElement>(null);
+  // Section links are in-page on the home page and point back home elsewhere.
+  const prefix = usePathname() === "/" ? "" : "/";
 
   useEffect(() => {
     const el = root.current!;
@@ -71,7 +74,7 @@ export default function Footer() {
               <ul className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-3 font-mono text-sm md:text-base text-cream">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="group inline-block">
+                    <Link href={prefix + link.href} className="group inline-block">
                       <RollText text={link.label} />
                     </Link>
                   </li>
