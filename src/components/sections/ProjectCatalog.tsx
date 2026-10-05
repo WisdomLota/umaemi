@@ -14,23 +14,11 @@ import DiamondAnchor from "@/components/three/DiamondAnchor";
 import HeroDiamond from "@/components/three/HeroDiamond";
 import { kickDiamond } from "@/components/three/diamond-bus";
 import { gsap, Flip } from "@/lib/gsap";
+import { homeProjects, Project } from "@/lib/projects";
 import { prefersReducedMotion } from "@/lib/media";
 
-type Project = { name: string; icon: string; description?: string; tags?: string[] };
-
-const projects: Project[] = [
-  {
-    name: "Pixel Codex",
-    icon: "/icons/projects/pixel-codex.svg",
-    description:
-      "An Ed-Tech company that helps beginners in the tech space grow to a professional level of proficiency",
-    tags: ["BRANDING", "DEVELOPMENT", "MAINTENANCE"],
-  },
-  { name: "Hastium", icon: "/icons/projects/hastim.svg" },
-  { name: "TMD", icon: "/icons/projects/tmd.svg" },
-  { name: "Efandex", icon: "/icons/projects/efandex.svg" },
-  { name: "Lowin", icon: "/icons/projects/lowin.svg" },
-];
+// The home catalog shows five projects; the rest live on /projects.
+const projects = homeProjects;
 
 // order[0] is the featured project; order[1..4] fill the four side slots
 // (two left, two right). Choosing a tile swaps it with the featured one.
@@ -56,8 +44,8 @@ function ProjectTile({
           size === "lg" ? "w-32 h-32 lg:w-40 lg:h-40" : "w-full aspect-square"
         }`}
       >
-        <div className="opacity-60 grayscale transition-[opacity,filter,scale] duration-500 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-110">
-          <div data-flip-id={name} className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16">
+        <div className="logo-mute group-hover:scale-110">
+          <div data-flip-id={project.slug} className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16">
             <Image src={icon} alt="" width={64} height={64} className="w-full h-full object-contain" />
           </div>
         </div>
@@ -74,22 +62,29 @@ function ProjectTile({
 function FeaturedCard({ project }: { project: Project }) {
   return (
     <TiltCard max={8} className="w-60 lg:w-72 h-112 lg:h-136 shrink-0 corner-flip [--r:1rem]">
-      {/* dashed outer frame marches around; cyan inner frame glows */}
+      {/* dashed outer frame marches around; the inner frame takes on the
+          featured brand's own colour and glows with it */}
       <CornerFrame corners="tr-bl" radius={16} stroke="var(--color-cream)" dashed march />
-      <div className="absolute inset-2">
-        <CornerFrame corners="tl-br" radius={16} stroke="var(--color-pixel)" />
+      <div className="absolute inset-2" style={{ ["--accent" as string]: project.accent }}>
+        <CornerFrame corners="tl-br" radius={16} stroke="var(--accent)" className="transition-[stroke] duration-700" />
         <div
           aria-hidden
-          className="absolute inset-0 corner [--r:1rem] opacity-60"
-          style={{ boxShadow: "inset 0 0 60px -10px rgba(76,201,240,0.35), 0 0 80px -30px rgba(76,201,240,0.5)" }}
+          className="absolute inset-0 corner [--r:1rem] opacity-60 transition-shadow duration-700"
+          style={{
+            boxShadow:
+              "inset 0 0 60px -10px color-mix(in oklab, var(--accent) 35%, transparent), 0 0 80px -30px color-mix(in oklab, var(--accent) 50%, transparent)",
+          }}
         />
         {/* scanline sweep */}
         <div aria-hidden className="absolute inset-0 overflow-hidden corner [--r:1rem]">
-          <div className="absolute inset-x-0 h-24 -top-24 bg-gradient-to-b from-transparent via-pixel/10 to-transparent animate-[scan_4.5s_linear_infinite]" />
+          <div
+            className="absolute inset-x-0 h-24 -top-24 animate-[scan_4.5s_linear_infinite]"
+            style={{ background: "linear-gradient(to bottom, transparent, color-mix(in oklab, var(--accent) 10%, transparent), transparent)" }}
+          />
         </div>
         <div data-depth="60" className="absolute inset-0 flex items-center justify-center">
           <PixelReveal cols={10} rows={8}>
-            <div data-flip-id={project.name} className="w-25 h-25 lg:w-30 lg:h-30">
+            <div data-flip-id={project.slug} className="w-25 h-25 lg:w-30 lg:h-30">
               <Image src={project.icon} alt={project.name} width={120} height={120} className="w-full h-full object-contain" />
             </div>
           </PixelReveal>
@@ -101,37 +96,39 @@ function FeaturedCard({ project }: { project: Project }) {
 
 function ProjectInfo({ project, align = "left" }: { project: Project; align?: "left" | "center" }) {
   // Keyed by project so the copy re-animates in each time the featured one changes.
+  const copy = project.home!;
   return (
-    <div key={project.name} aria-live="polite" className={align === "center" ? "text-center max-w-xs" : "text-left max-w-xs"}>
+    <div key={project.slug} aria-live="polite" className={align === "center" ? "text-center max-w-xs" : "text-left max-w-xs"}>
       <SplitReveal as="h3" by="chars" className="font-sans text-3xl lg:text-4xl font-medium mb-4">
-        {project.name}
+        {copy.name ?? project.name}
       </SplitReveal>
-      {project.description && (
-        <SplitReveal as="p" by="lines" className="font-mono text-sm lg:text-base text-cream/70 mb-6">
-          {project.description}
-        </SplitReveal>
-      )}
-      {project.tags && (
-        <div className={`flex gap-4 lg:gap-6 flex-wrap font-mono text-xs lg:text-sm font-medium text-burnt ${align === "center" ? "justify-center" : ""}`}>
-          {project.tags.map((t, i) => (
-            <Scramble key={t} text={t} hover delay={i * 0.12} />
-          ))}
-        </div>
-      )}
+      <SplitReveal as="p" by="lines" className="font-mono text-sm lg:text-base text-cream/70 mb-6">
+        {copy.description}
+      </SplitReveal>
+      <div className={`flex gap-4 lg:gap-6 flex-wrap font-mono text-xs lg:text-sm font-medium text-burnt ${align === "center" ? "justify-center" : ""}`}>
+        {project.tags.map((t, i) => (
+          <Scramble key={t} text={t} hover delay={i * 0.12} />
+        ))}
+      </div>
     </div>
   );
 }
 
-function ProjectActions() {
+function ProjectActions({ project }: { project: Project }) {
   return (
     <div className="flex flex-col items-stretch gap-4 w-full max-w-xs lg:w-72">
-      <div data-cursor="view">
-        <Button href="#" variant="outline" icon={<ArrowUpRight className="w-5 h-5" />} className="justify-center">
-          Visit Site
+      <div data-cursor="view" className="text-cream">
+        <Button
+          href={project.url ?? "#"}
+          variant="outline"
+          icon={<ArrowUpRight className="w-5 h-5" />}
+          className="justify-center border-burnt!"
+        >
+          {project.action}
         </Button>
       </div>
-      <Button href="#" className="w-full justify-center">
-        Explore
+      <Button href="/projects" className="w-full justify-center">
+        Explore Catalog
       </Button>
     </div>
   );
@@ -248,7 +245,7 @@ export default function ProjectCatalog() {
         </div>
         <FeaturedCard project={featured} />
         <ProjectInfo project={featured} align="center" />
-        <ProjectActions />
+        <ProjectActions project={featured} />
       </div>
 
       {/* desktop: the featured project held between its siblings */}
@@ -277,7 +274,7 @@ export default function ProjectCatalog() {
             ))}
           </div>
           <div className="absolute -bottom-14 left-0">
-            <ProjectActions />
+            <ProjectActions project={featured} />
           </div>
         </div>
       </div>

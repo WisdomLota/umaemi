@@ -11,13 +11,15 @@ type TiltCardProps = {
   max?: number;
   /** Show a soft light that follows the cursor across the surface. */
   glare?: boolean;
+  /** Classes for the outer perspective wrapper (e.g. h-full in a grid). */
+  outerClassName?: string;
 };
 
 /**
  * A surface with weight: it leans toward the cursor in 3D and settles back
  * with a spring. Children with data-depth="n" float n px above the surface.
  */
-export default function TiltCard({ children, className = "", max = 10, glare = true }: TiltCardProps) {
+export default function TiltCard({ children, className = "", max = 10, glare = true, outerClassName = "" }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const shine = useRef<HTMLDivElement>(null);
 
@@ -53,7 +55,7 @@ export default function TiltCard({ children, className = "", max = 10, glare = t
   }, [max]);
 
   return (
-    <div className="[perspective:1000px]">
+    <div className={`[perspective:1000px] ${outerClassName}`}>
       <div ref={ref} className={`relative [transform-style:preserve-3d] will-change-transform ${className}`}>
         {children}
         {glare && (
