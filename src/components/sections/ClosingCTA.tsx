@@ -68,7 +68,7 @@ export default function ClosingCTA() {
             begin with a free consultation.
           </h2>
           <div data-cta-in>
-            <Button href="#contact">Book Consultation Session</Button>
+            <Button href="/consultation">Book Consultation Session</Button>
           </div>
         </div>
 

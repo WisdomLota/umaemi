@@ -248,7 +248,7 @@ export default function Services() {
                 {current.body}
               </p>
               <div className="mt-10 md:mt-auto pt-6">
-                <Button href="#contact">Book Consultation Session</Button>
+                <Button href="/consultation">Book Consultation Session</Button>
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import { burstDiamond, kickDiamond } from "@/components/three/diamond-bus";
 import { DIAMOND_PIECES, DIAMOND_VIEWBOX } from "@/components/three/diamond-paths";
 import { gsap, EASE } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/media";
+import { submitForm } from "@/lib/submit";
 
 function Glyph() {
   return (
@@ -25,13 +26,23 @@ function Glyph() {
 export default function ReachOut() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<{ state: "idle" | "sending" | "sent" | "error"; note?: string }>({ state: "idle" });
   const root = useRef<HTMLElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const plane = useRef<HTMLSpanElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, message });
+    if (status.state === "sending") return;
+    setStatus({ state: "sending" });
+    const result = await submitForm("contact", { email, message });
+    if (!result.ok) {
+      setStatus({ state: "error", note: result.error });
+      return;
+    }
+    setStatus({ state: "sent", note: "Thank you — we'll be in touch soon." });
+    setEmail("");
+    setMessage("");
     // A little ceremony: the diamond bursts and the plane flies off and back.
     burstDiamond();
     if (plane.current && !prefersReducedMotion()) {
@@ -150,11 +161,15 @@ export default function ReachOut() {
                 data-lenis-prevent
               />
             </div>
-            <div data-field className="flex justify-end">
+            <div data-field className="flex items-center justify-end gap-6">
+              <p role="status" className={`font-mono text-sm ${status.state === "error" ? "text-peach" : "text-peach/80"}`}>
+                {status.note}
+              </p>
               <Magnetic strength={0.3} reach={30}>
                 <button
                   type="submit"
-                  className="group/send relative inline-flex items-center gap-3 px-8 py-4 corner [--r:1rem] bg-burnt text-cream font-mono text-base font-medium overflow-hidden isolate"
+                  disabled={status.state === "sending"}
+                  className="group/send relative inline-flex items-center gap-3 px-8 py-4 corner [--r:1rem] bg-burnt text-cream font-mono text-base font-medium overflow-hidden isolate disabled:opacity-70 shrink-0"
                 >
                   <span aria-hidden className="absolute inset-0 -z-10 bg-cream corner [--r:1rem] origin-bottom-right scale-0 transition-transform duration-700 ease-out-expo group-hover/send:scale-100" />
                   <span className="transition-colors duration-300 group-hover/send:text-dark">Send</span>

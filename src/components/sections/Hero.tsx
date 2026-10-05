@@ -111,7 +111,7 @@ export default function Hero() {
               scale your business with tech.
             </p>
             <div data-hero-in className="w-full md:w-auto shrink-0">
-              <Button href="#contact">Book Consultation Session</Button>
+              <Button href="/consultation">Book Consultation Session</Button>
             </div>
           </div>
         </div>
