@@ -121,6 +121,7 @@ export default function CatalogGrid() {
   return (
     <section data-world="night" className="relative bg-night text-cream px-5 sm:px-8 md:px-16 pt-32 md:pt-36 pb-28 md:pb-40">
       <div className="max-w-6xl mx-auto">
+        <h1 className="sr-only">Our Project Catalog</h1>
         <label data-search className="flex items-center gap-4 border border-cream/60 corner [--r:0.9rem] px-5 py-3.5 mb-16 md:mb-20 focus-within:border-cream transition-colors">
           <SearchIcon />
           <input

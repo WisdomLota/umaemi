@@ -6,8 +6,11 @@ import ClosingCTA from "@/components/sections/ClosingCTA";
 import { joinFlow } from "@/lib/flows";
 
 export const metadata: Metadata = {
-  title: "Join the Umaemi Network — Umaemi",
-  description: "A community of businesses, professionals and organizations growing together.",
+  title: "Join the Umaemi Network",
+  description:
+    "Our community brings together businesses, professionals, entrepreneurs, and organizations looking to grow through meaningful connections and shared opportunities.",
+  alternates: { canonical: "/join" },
+  openGraph: { url: "/join", title: "Join the Umaemi Network | Umaemi" },
 };
 
 export default function Page() {

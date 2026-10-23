@@ -6,7 +6,7 @@ import { prefersReducedMotion } from "@/lib/media";
 import { introStore } from "@/lib/store";
 
 type SplitRevealProps = {
-  as?: "div" | "p" | "span" | "h2" | "h3";
+  as?: "div" | "p" | "span" | "h1" | "h2" | "h3";
   children: ReactNode;
   className?: string;
   /** "words" rise out of masked lines; "chars" for display type. */

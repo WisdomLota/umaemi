@@ -5,8 +5,11 @@ import CatalogGrid from "@/components/sections/CatalogGrid";
 import ClosingCTA from "@/components/sections/ClosingCTA";
 
 export const metadata: Metadata = {
-  title: "Our Project Catalog — Umaemi",
-  description: "Brands and products Umaemi has designed, built and maintains.",
+  title: "Our Project Catalog",
+  description:
+    "Brands and digital products Umaemi has designed, built and maintains — from Pixel Codex and TMD to Hastim, Daily Stride and AKH Con Realty.",
+  alternates: { canonical: "/projects" },
+  openGraph: { url: "/projects", title: "Our Project Catalog | Umaemi" },
 };
 
 export default function ProjectsPage() {

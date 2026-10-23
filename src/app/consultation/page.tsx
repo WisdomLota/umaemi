@@ -6,8 +6,11 @@ import ClosingCTA from "@/components/sections/ClosingCTA";
 import { consultationFlow } from "@/lib/flows";
 
 export const metadata: Metadata = {
-  title: "Book a Free Consultation — Umaemi",
-  description: "Start with a free consultation to explore what's possible for your business.",
+  title: "Book a Free Consultation",
+  description:
+    "Our process begins with a free consultation session designed to understand your business, challenges, and goals — practical next steps, without pressure or technical jargon.",
+  alternates: { canonical: "/consultation" },
+  openGraph: { url: "/consultation", title: "Book a Free Consultation | Umaemi" },
 };
 
 export default function Page() {

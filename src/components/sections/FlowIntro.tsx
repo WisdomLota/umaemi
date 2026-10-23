@@ -108,7 +108,7 @@ export default function FlowIntro({ flow }: { flow: Flow }) {
                   </div>
                 )}
                 <div className="max-w-xl">
-                  <SplitReveal as="h2" by="chars" className="font-sans font-medium text-4xl md:text-5xl tracking-[-0.02em] leading-[1.05] mb-8">
+                  <SplitReveal as={i === 0 ? "h1" : "h2"} by="chars" className="font-sans font-medium text-4xl md:text-5xl tracking-[-0.02em] leading-[1.05] mb-8">
                     {section.title}
                   </SplitReveal>
                   <div className="flex flex-col gap-5 font-mono text-sm md:text-base leading-relaxed text-dark/90">
