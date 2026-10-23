@@ -53,7 +53,7 @@ export default function Footer() {
           <div data-foot-rule className="mb-16 dash-x text-cream/40 origin-left" />
 
           <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left justify-between gap-12">
-            <Image src="/icons/logo-gray.svg" alt="" width={130} height={166} className="w-32.5 h-auto" />
+            <Image src="/icons/logo-gray.svg" alt="Umaemi logo" width={130} height={166} className="w-32.5 h-auto" />
 
             <div className="flex flex-col items-center md:items-end gap-8">
               <div className="flex gap-5">
@@ -89,7 +89,7 @@ export default function Footer() {
         </div>
 
         <div data-foot-mark className="mt-16 md:mt-24 opacity-[0.07]">
-          <Image src="/icons/wordmark.svg" alt="" width={810} height={140} className="w-full h-auto" />
+          <Image src="/icons/wordmark.svg" alt="Umaemi" width={810} height={140} className="w-full h-auto" />
         </div>
       </div>
     </footer>

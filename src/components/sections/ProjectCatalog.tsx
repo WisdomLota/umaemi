@@ -46,7 +46,7 @@ function ProjectTile({
       >
         <div className="logo-mute group-hover:scale-110">
           <div data-flip-id={project.slug} className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16">
-            <Image src={icon} alt="" width={64} height={64} className="w-full h-full object-contain" />
+            <Image src={icon} alt={`${name} logo`} width={64} height={64} className="w-full h-full object-contain" />
           </div>
         </div>
         <CornerDot className="absolute -top-px -left-px w-4 h-4 text-burnt scale-0 transition-transform duration-500 ease-out-expo group-hover:scale-100" />

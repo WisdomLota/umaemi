@@ -107,13 +107,13 @@ export default function Preloader() {
 
       <div className="absolute left-8 md:left-16 top-10 md:top-14 overflow-hidden">
         <div data-pre-in>
-          <Image src="/icons/logo.svg" alt="" width={40} height={40} priority />
+          <Image src="/icons/logo.svg" alt="Umaemi logo" width={40} height={40} priority />
         </div>
       </div>
 
       <div className="absolute left-8 md:left-16 bottom-10 md:bottom-14 overflow-hidden">
         <div data-pre-in className="w-40 md:w-56 opacity-40">
-          <Image src="/icons/wordmark.svg" alt="" width={810} height={140} priority />
+          <Image src="/icons/wordmark.svg" alt="Umaemi" width={810} height={140} priority />
         </div>
       </div>
 
