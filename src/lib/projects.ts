@@ -25,6 +25,7 @@ export const projects: Project[] = [
     accent: "#4CC9F0",
     tags: ["BRANDING", "DEVELOPMENT", "MAINTENANCE"],
     action: "Visit Site",
+    url: "https://pixel-codex-spw.vercel.app/",
     home: {
       description:
         "An Ed-Tech company that helps beginners in the tech space grow to a professional level of proficiency",
@@ -38,6 +39,7 @@ export const projects: Project[] = [
     accent: "#822E27",
     tags: ["DEVELOPMENT", "MAINTENANCE"],
     action: "Visit Site",
+    url: "https://www.akhrealty.com/",
     home: { description: "A real estate company delivering modern homes through thoughtful design and transparency." },
     catalog: { name: "AKH Con Realty", description: "A real estate company creating modern homes with transparency." },
   },
@@ -58,6 +60,7 @@ export const projects: Project[] = [
     accent: "#598BD3",
     tags: ["DEVELOPMENT", "MAINTENANCE"],
     action: "Visit Site",
+    url: "https://www.dailystridellc.com/",
     home: { description: "A venture studio creating and managing innovative digital products in-house." },
     catalog: { description: "A venture studio building and managing innovative digital products." },
   },
@@ -67,7 +70,8 @@ export const projects: Project[] = [
     icon: "/icons/projects/tmd-color.svg",
     accent: "#FEEAC5",
     tags: ["BRANDING", "DEVELOPMENT", "MAINTENANCE"],
-    action: "View Guide",
+    action: "Visit Site",
+    url: "https://tmdquant.vercel.app/",
     home: { description: "A quantitative finance firm providing data-driven investment opportunities for investors." },
     catalog: { description: "A quantitative finance firm delivering data-driven investment growth." },
   },
@@ -78,6 +82,7 @@ export const projects: Project[] = [
     accent: "#375381",
     tags: ["DEVELOPMENT", "MAINTENANCE"],
     action: "Visit Site",
+    url: "https://efandex-web.vercel.app/",
     catalog: { description: "A marketplace connecting event hosts with unique venue spaces." },
   },
   {
@@ -86,7 +91,8 @@ export const projects: Project[] = [
     icon: "/icons/projects/lowin-color.svg",
     accent: "#FF8D19",
     tags: ["BRANDING"],
-    action: "View Guide",
+    action: "Visit Site",
+    url: "https://lowinproper.vercel.app/",
     catalog: { description: "A micro-cap cryptocurrency investment company focused on growth." },
   },
   {
