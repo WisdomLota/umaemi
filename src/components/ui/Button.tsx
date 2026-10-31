@@ -93,7 +93,11 @@ export default function Button({
   );
 
   const element = href ? (
-    <Link href={href} className={classes}>
+    <Link
+      href={href}
+      className={classes}
+      {...(/^https?:\/\//.test(href) && { target: "_blank", rel: "noopener noreferrer" })}
+    >
       {content}
     </Link>
   ) : (
